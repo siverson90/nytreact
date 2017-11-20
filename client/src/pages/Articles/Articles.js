@@ -13,6 +13,11 @@ class Articles extends Component {
     endDate: ""
   };
 
+
+  seeState (){
+    console.log(this.state.articles)
+  }
+
   handleInputChange = event => {
     const { name, value} = event.target;
     this.setState({
@@ -32,21 +37,33 @@ class Articles extends Component {
         startDate: this.state.startDate,
         endDate: this.state.endDate
       })
-      .then(res => console.log(res))
+      .then(res => {
+        
+        let data = res.data.response.docs;
+         console.log(data);
+        console.log(data.length);
+        for (var i = 0; i < data.length; i++) {
+          console.log("************")
+          console.log(data[i].headline.main)
+          console.log(data[i].web_url)
+          console.log(data[i].pub_date)
+        }
+
+        // return this.state({articles: res.data})
+      })
       .catch(err => console.log(err));
     }
   };
-
-  // loadArticles = () => {
-  //   API.getArticles()
-  //   .then(res => this.setState({
-  //     articles: res.data
-  //   }, 
-  //   console.log(res.data)
-  //   ))
-  //   .catch(err => console.log(err))
-  // };
-
+     
+      // {
+      //   // let data = res.data.response.docs;
+      //   // console.log(data);
+      //   // console.log(data.length);
+      //   // for (let i = 0; i < data.length; i++) {
+      //   //   console.log(data[i].web_url)
+      //     // console.log(res.data.response[i].web_url)
+      //     // console.log(res.data.response[i].web_url)
+      //   }
   render () {
     return (
       <div>
@@ -74,6 +91,16 @@ class Articles extends Component {
               Submit
              </button>
            </form>
+           <div>
+             {/*<ul className="list-group">
+                         {this.state.articles.map(item => (
+                           <li className="list-group-item" key={item.id}>
+                             {item.title}
+                             {item.headline}
+                           </li>
+                             ))}
+                           </ul>*/}
+           </div>
         </div>
       );
     }
