@@ -9,7 +9,7 @@ import Saved from "./pages/Saved";
 const App = () =>
   <Router>
     <div>
-    <Header/>
+    <Header />
      <Switch>
       <Route exact path="/" component={Articles}/>
       <Route exact path="/saved" component={Saved}/>
