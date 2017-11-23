@@ -1,109 +1,108 @@
 import React, { Component } from "react";
-
 import API from "../../utils/API";
-import Input from "../../components/Input";
+import Results from "../../components/Results";
 
 class Articles extends Component {
-
   state = {
-    savedArticles: [],
-    articles : [],
-    title: "",
-    startDate: "",
-    endDate: ""
+    articles: [],
+    articlesSubmitted: false,
+    query:"",
+    startDate:"",
+    endDate:""
   };
 
-
-  seeState (){
-    console.log(this.state.articles)
+  componentWillUpdate() {
+    console.log(this.state.articles);
   }
+  
 
   handleInputChange = event => {
-    const { name, value} = event.target;
+
+    const { name, value } = event.target;
     this.setState({
       [name]: value
     });
   };
 
-  // componentDidMount() {
-  //   this.loadArticles();
-  // }
-
   handleFormSubmit = event => {
+    
     event.preventDefault();
-    if(this.state.title && this.state.startDate && this.state.endDate) {
-      API.getArticles ({
-        title: this.state.title,
+    API.getSaved();
+    if (this.state.query && this.state.startDate && this.state.endDate) {
+      API.getArticles({
+        query: this.state.query,
         startDate: this.state.startDate,
         endDate: this.state.endDate
       })
       .then(res => {
-        
-        let data = res.data.response.docs;
-         console.log(data);
-        console.log(data.length);
-        for (var i = 0; i < data.length; i++) {
-          console.log("************")
-          console.log(data[i].headline.main)
-          console.log(data[i].web_url)
-          console.log(data[i].pub_date)
-        }
-
-        // return this.state({articles: res.data})
+        this.setState({articles: res.data.response.docs})
+        this.setState({articlesSubmitted: true})
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
     }
-  };
-     
-      // {
-      //   // let data = res.data.response.docs;
-      //   // console.log(data);
-      //   // console.log(data.length);
-      //   // for (let i = 0; i < data.length; i++) {
-      //   //   console.log(data[i].web_url)
-      //     // console.log(res.data.response[i].web_url)
-      //     // console.log(res.data.response[i].web_url)
-      //   }
-  render () {
+  }
+
+
+  render() {
     return (
-      <div>
-          <form>
-            <Input 
-              value={this.state.title}
-              onChange={this.handleInputChange}
-              name="title"
-              placeholder="Enter your search term"
-            />
-            <Input
-              value={this.state.startDate}
-              onChange={this.handleInputChange}
-              name="startDate"
-              placeholder="YYYYMMDD"
-             />
-              <Input
-              value={this.state.endDate}
-              onChange={this.handleInputChange}
-              name="endDate"
-              placeholder="YYYYMMDD"
-             />
-             <button
-              onClick={this.handleFormSubmit} > 
-              Submit
-             </button>
-           </form>
-           <div>
-             {/*<ul className="list-group">
-                         {this.state.articles.map(item => (
-                           <li className="list-group-item" key={item.id}>
-                             {item.title}
-                             {item.headline}
-                           </li>
-                             ))}
-                           </ul>*/}
-           </div>
+      <div className="container">
+        <div className="jumbotron">
+          <h1>New York Times </h1>
         </div>
-      );
-    }
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">Query</h3>
+          </div>
+          <div className="panel-body">
+            <form>
+              <div className="form-group">
+                <label htmlFor="query">query</label>
+                <input 
+                  value={this.state.query}
+                  onChange={this.handleInputChange}
+                  name="query"
+                  className="form-control" 
+                  id="search" 
+                  placeholder="Search here" 
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="startDate">Start date (YYYY) </label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="startDate" 
+                  placeholder="2010"
+                  value={this.state.startDate}
+                  onChange={this.handleInputChange}
+                  name="startDate" 
+                  />
+              </div>
+              <div className="form-group">
+                 <label htmlFor="endDate">End date (YYYY) </label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="endDate" 
+                  placeholder="2015"
+                  value={this.state.endDate}
+                  onChange={this.handleInputChange}
+                  name="endDate" 
+                  />
+              </div>
+              <button 
+                type="submit" 
+                className="btn btn-default"
+                onClick={this.handleFormSubmit}
+                >Submit
+              </button>
+            </form>
+          </div>
+        </div>
+        { this.state.articlesSubmitted ? <Results results={this.state.articles} /> : <div>Not Submitted </div> } 
+      </div>
+    );
+  }
 }
 
 export default Articles;

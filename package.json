@@ -1,28 +1,11 @@
 {
-  "name": "nytreact",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
   "dependencies": {
-    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "mongoose": "^4.13.4",
-    "react-router-dom": "^4.2.2"
+    "mongoose": "^4.13.4"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/siverson90/nytreact.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/siverson90/nytreact/issues"
-  },
-  "homepage": "https://github.com/siverson90/nytreact#readme"
+  "name": "Team_NYT",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
 }
