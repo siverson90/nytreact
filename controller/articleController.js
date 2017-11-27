@@ -16,9 +16,11 @@ module.exports = {
     .catch(exportsr => res.status(422).json(err))
   },
   delete: function(req,res) {
-    console.log("controler hit");
-    console.log(req.params.id);
-    // .remove({ id: req.params.id})
+    db.Saved
+    .findById({ _id: req.params.id })
+      .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   }
   
 }
