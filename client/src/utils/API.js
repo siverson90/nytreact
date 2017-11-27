@@ -42,5 +42,12 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
+    },
+    deleteArticle: function(data){
+      console.log(data);
+      axios.delete("/api/articles/saved/" +data)
+    .then(function(res){
+      console.log(res)
+    })
     }
   }

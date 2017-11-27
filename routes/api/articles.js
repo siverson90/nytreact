@@ -5,6 +5,9 @@ const articleController = require("../../controller/articleController.js");
   .post(articleController.create);
 
   router.route("/saved")
-  .get(articleController.findAll);
+  .get(articleController.findAll)
+
+  router.route("/saved/:id")
+  .delete(articleController.delete)
 
   module.exports = router;

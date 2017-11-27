@@ -15,6 +15,15 @@ class Saved extends Component {
     API.getSaved()
     .then(res => this.setState({savedArticles: res.data}))
   }
+
+  deleteArticle = (event) => {
+    API.deleteArticle(event.target.id)
+    // .then(res => this.setState({
+    //   savedArticles:res.data
+    // }));
+  }
+
+
   render(){
     return(
       <div className="container">
@@ -35,7 +44,14 @@ class Saved extends Component {
                 <div className="articleDate">
                   <p>{value.date}</p>
                 </div>
-                <button type="button" className="btn btn-info saveArticle" data-title={value.main} data-date={value.date} data-url={value.url} onClick={this.updateMongo}>Unsave Article</button>
+                <button 
+                  type="button" 
+                  className="btn btn-info saveArticle" 
+                  id={value._id}
+                  data-title={value.title} 
+                  data-date={value.date} 
+                  data-url={value.url} 
+                  onClick={this.deleteArticle}>Unsave Article</button>
                 <a href={value.url} className="btn btn-info viewArticle" target="_blank" role="button">View Article</a>
               </div>
             </div>

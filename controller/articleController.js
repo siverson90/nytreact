@@ -14,6 +14,11 @@ module.exports = {
     .sort({createdAt: -1})
     .then(dbModel => res.json(dbModel))
     .catch(exportsr => res.status(422).json(err))
+  },
+  delete: function(req,res) {
+    console.log("controler hit");
+    console.log(req.params.id);
+    // .remove({ id: req.params.id})
   }
   
 }

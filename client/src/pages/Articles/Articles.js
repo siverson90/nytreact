@@ -27,7 +27,7 @@ class Articles extends Component {
   handleFormSubmit = event => {
     
     event.preventDefault();
-    API.getSaved();
+    // API.getSaved();
     if (this.state.query && this.state.startDate && this.state.endDate) {
       API.getArticles({
         query: this.state.query,
